@@ -1,0 +1,32 @@
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": [
+        "shadcn@latest",
+        "mcp"
+      ]
+    },
+    "react-router Docs": {
+      "url": "https://gitmcp.io/remix-run/react-router"
+    },
+    "tanstack query Docs" :{
+      "url": "https://gitmcp.io/TanStack/query"
+    },
+    "tanstack table Docs" :{
+      "url": "https://gitmcp.io/TanStack/table"
+    },
+    "tanstack virtual Docs" :{
+      "url": "https://gitmcp.io/TanStack/virtual"
+    },
+    "Reactjs Docs" :{
+      "url": "https://gitmcp.io/facebook/react"
+    },
+    "tailwind Docs" :{
+      "url": "https://gitmcp.io/tailwindlabs/tailwindcss"
+    },
+    "vite Docs": {
+      "url": "https://gitmcp.io/vitejs/vite" 
+    }
+  }
+}

@@ -1,87 +1,117 @@
-# Welcome to React Router!
+# Kisum Admin Dashboard
 
-A modern, production-ready template for building full-stack React applications using React Router.
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+A scalable, maintainable, and high-performance admin dashboard built with React Router v7.
 
 ## Features
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- ✅ **Authentication**: Sign in and Sign up pages with session management
+- ✅ **Type Safety**: Full TypeScript support with type-safe routes
+- ✅ **Modern UI**: Tailwind CSS with dark mode support
+- ✅ **Form Validation**: React Hook Form with Zod validation
+- ✅ **Server-Side Rendering**: SSR enabled for better performance
+- ✅ **Scalable Architecture**: Feature-based folder structure
+
+## Project Structure
+
+```
+app/
+├── components/          # Reusable UI components
+│   └── ui/             # Base UI components (Button, Input, Card)
+├── routes/             # File-based routing
+│   ├── _auth/          # Authentication routes
+│   │   ├── signin.tsx  # Sign in page
+│   │   └── signup.tsx  # Sign up page
+│   └── _dashboard/     # Protected dashboard routes
+│       ├── _layout.tsx # Dashboard layout
+│       └── _index.tsx  # Dashboard home
+├── lib/                # Utilities and helpers
+│   ├── api/            # API client and resources
+│   ├── auth/           # Authentication utilities
+│   ├── config/         # Configuration
+│   └── utils/          # General utilities
+├── hooks/              # Custom React hooks
+├── types/              # TypeScript types
+└── server/             # Server-only code
+    └── actions/         # Server actions
+```
 
 ## Getting Started
 
+### Prerequisites
+
+- Node.js 18+
+- pnpm >= 10.0.0
+
 ### Installation
 
-Install the dependencies:
-
 ```bash
-npm install
+pnpm install
 ```
 
 ### Development
 
-Start the development server with HMR:
+```bash
+pnpm dev
+```
+
+The app will be available at `http://localhost:5173`
+
+### Build
 
 ```bash
-npm run dev
+pnpm build
 ```
 
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
+### Production
 
 ```bash
-npm run build
+pnpm start
 ```
 
-## Deployment
+## Authentication
 
-### Docker Deployment
+The app includes a complete authentication system with:
 
-To build and run using Docker:
+- **Sign In**: `/signin` - User authentication
+- **Sign Up**: `/signup` - New user registration
+- **Session Management**: Server-side session handling
+- **Protected Routes**: Dashboard routes require authentication
 
-```bash
-docker build -t my-app .
+### Mock Authentication
 
-# Run the container
-docker run -p 3000:3000 my-app
-```
+Currently, the authentication uses mock data for development. To integrate with a real backend:
 
-The containerized application can be deployed to any platform that supports Docker, including:
+1. Update `app/lib/api/auth.ts` to point to your API endpoints
+2. Update the action functions in `app/routes/_auth/signin.tsx` and `app/routes/_auth/signup.tsx`
+3. Configure your session store in `app/lib/auth/session.server.ts` (use Redis, database, etc.)
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+## Routes
 
-### DIY Deployment
+- `/` - Home (redirects to signin or dashboard)
+- `/signin` - Sign in page
+- `/signup` - Sign up page
+- `/dashboard` - Protected dashboard (requires authentication)
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
+## Tech Stack
 
-Make sure to deploy the output of `npm run build`
+- **React Router v7** - Routing and SSR
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **React Hook Form** - Form handling
+- **Zod** - Schema validation
+- **TanStack Query** - Server state management
+- **Vite** - Build tool
 
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
+## Next Steps
 
-## Styling
+1. **Connect to Backend**: Update API endpoints in `app/lib/api/`
+2. **Add More Routes**: Create additional dashboard pages
+3. **Implement Permissions**: Add role-based access control
+4. **Add Data Tables**: Use TanStack Table for data management
+5. **Set Up Testing**: Add unit and E2E tests
+6. **Configure CI/CD**: Set up deployment pipeline
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+## License
 
----
-
-Built with ❤️ using React Router.
+MIT
