@@ -1,5 +1,5 @@
 {
-  "name": "kisum-admin",
+  "name": "dashboard-admin",
   "private": true,
   "type": "module",
   "scripts": {

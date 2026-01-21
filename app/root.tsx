@@ -51,7 +51,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {/* Initial loader shown before JS loads - removed by React on hydration */}
         <div id="initial-loader" aria-hidden="true">
           <div className="spinner" />
-          <span className="text">Loading...</span>
         </div>
         <script
           dangerouslySetInnerHTML={{

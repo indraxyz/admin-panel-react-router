@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FileQuestion, Home, ArrowLeft } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
@@ -10,6 +10,16 @@ import {
 } from "~/components/ui/card";
 
 export default function DashboardNotFound() {
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/dashboard");
+    }
+  };
+
   return (
     <div className="flex flex-1 items-center justify-center p-4">
       <Card className="mx-auto w-full max-w-md text-center">
@@ -24,11 +34,13 @@ export default function DashboardNotFound() {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <Button asChild variant="outline" className="w-full sm:w-auto">
-            <Link to="/dashboard">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Go Back
-            </Link>
+          <Button
+            variant="outline"
+            className="w-full cursor-pointer sm:w-auto"
+            onClick={handleGoBack}
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Go Back
           </Button>
           <Button asChild className="w-full sm:w-auto">
             <Link to="/dashboard">

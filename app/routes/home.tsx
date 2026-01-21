@@ -22,10 +22,10 @@ import {
 
 export function meta(_args: Route.MetaArgs) {
   return [
-    { title: "Kisum Admin  -  Team" },
+    { title: "Admin  -  Team" },
     {
       name: "description",
-      content: " admin  for Kisum team - Manage events and operations",
+      content: " admin  for team - Manage events and operations",
     },
   ];
 }
@@ -81,7 +81,7 @@ export default function Home() {
                 <Shield className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </div>
               <span className="text-sm font-semibold sm:text-base">
-                Kisum Admin
+                Admin
               </span>
             </div>
             <div className="flex items-center gap-2 sm:gap-4">
@@ -110,13 +110,13 @@ export default function Home() {
             <div className="bg-muted/50 mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm sm:mb-8 sm:px-4 sm:py-2">
               <Shield className="text-primary h-3.5 w-3.5 sm:h-4 sm:w-4" />
               <span className="text-muted-foreground">
-                Kisum team access only
+                team access only
               </span>
             </div>
 
             <h1 className="mb-4 text-3xl font-bold tracking-tight sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl">
               <span className="from-foreground to-foreground/70 bg-gradient-to-r bg-clip-text text-transparent">
-                Kisum Admin
+                Admin
               </span>
             </h1>
 
@@ -153,7 +153,7 @@ export default function Home() {
                   Everything you need
                 </h2>
                 <p className="text-muted-foreground mx-auto max-w-xl text-sm sm:text-base md:text-lg">
-                  All the tools and features the Kisum team needs to manage
+                  All the tools and features the team needs to manage
                   events effectively
                 </p>
               </div>
@@ -195,7 +195,7 @@ export default function Home() {
                 Ready to get started?
               </h3>
               <p className="text-muted-foreground mb-6 text-sm sm:text-base">
-                Sign in with your Kisum team account to access the admin tools
+                Sign in with your team account to access the admin tools
               </p>
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
                 <Button asChild size="lg" className="w-full sm:w-auto">
