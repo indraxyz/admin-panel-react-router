@@ -7,10 +7,13 @@ A modern, production-ready admin dashboard boilerplate built with React Router v
 - **Authentication** - Complete auth flow with sign in, sign up, and sign out
 - **Route Protection** - Client-side route guards for protected routes
 - **State Management** - Zustand with localStorage persistence
+- **Data Fetching** - TanStack Query for server state management
 - **Type Safety** - Full TypeScript support with strict mode
 - **Modern UI** - Tailwind CSS v4 with dark/light mode support
 - **Form Handling** - React Hook Form with Zod validation
+- **Tables & Lists** - TanStack Table and Virtual for efficient data rendering
 - **Code Quality** - ESLint, Prettier, and TypeScript configured
+- **Testing Setup** - Vitest, Playwright, and Testing Library configured
 - **SPA Mode** - Client-side rendering optimized for static hosting (AWS, Vercel, Netlify)
 - **Component Library** - Radix UI primitives with shadcn/ui styling
 
@@ -18,15 +21,18 @@ A modern, production-ready admin dashboard boilerplate built with React Router v
 
 | Category | Technology |
 |----------|------------|
-| Framework | React Router v7 (SPA mode) |
-| Language | TypeScript 5.9 |
-| UI Library | React 19 |
-| Styling | Tailwind CSS v4 |
-| State | Zustand |
-| Forms | React Hook Form + Zod |
-| Icons | Lucide React |
-| Build | Vite 7 |
-| Package Manager | pnpm |
+| Framework | React Router v7.12.0 (SPA mode) |
+| Language | TypeScript 5.9.2 |
+| UI Library | React 19.2.3 |
+| Styling | Tailwind CSS v4.1.13 |
+| State | Zustand 5.0.9 |
+| Data Fetching | TanStack Query 5.90.16 |
+| Tables | TanStack Table 8.21.3 |
+| Virtualization | TanStack Virtual 3.13.18 |
+| Forms | React Hook Form 7.70.0 + Zod 4.3.5 |
+| Icons | Lucide React 0.562.0 |
+| Build | Vite 7.1.7 |
+| Package Manager | pnpm 10+ |
 
 ## Project Structure
 
@@ -34,7 +40,7 @@ A modern, production-ready admin dashboard boilerplate built with React Router v
 dashboard-admin/
 ├── app/                          # Application source code
 │   ├── components/               # Shared UI components
-│   │   ├── ui/                   # Base components (Button, Input, Card, etc.)
+│   │   ├── ui/                   # Base components (Button, Input, Card, Breadcrumb, Sidebar, etc.)
 │   │   ├── app-sidebar.tsx       # Dashboard sidebar navigation
 │   │   ├── nav-main.tsx          # Main navigation menu
 │   │   ├── nav-projects.tsx      # Projects navigation section
@@ -71,6 +77,7 @@ dashboard-admin/
 ├── components.json               # shadcn/ui configuration
 ├── Dockerfile                    # Docker configuration
 ├── amplify.yml                   # AWS Amplify deployment config
+├── pnpm-workspace.yaml           # pnpm workspace configuration
 └── [config files]                # ESLint, Prettier, TypeScript, Vite configs
 ```
 
@@ -86,10 +93,22 @@ This project follows a **hybrid structure** combining feature-based organization
 ```
 components/
 ├── ui/                    # Primitive UI components (shadcn/ui)
+│   ├── avatar.tsx         # Avatar component
+│   ├── breadcrumb.tsx     # Breadcrumb navigation
 │   ├── button.tsx         # Buttons, links
-│   ├── input.tsx          # Form inputs
 │   ├── card.tsx           # Card containers
-│   └── ...                # Other primitives
+│   ├── collapsible.tsx    # Collapsible content
+│   ├── drawer.tsx         # Drawer/sheet component
+│   ├── dropdown-menu.tsx  # Dropdown menus
+│   ├── form-field.tsx     # Form field wrapper
+│   ├── input.tsx          # Form inputs
+│   ├── label.tsx          # Form labels
+│   ├── separator.tsx      # Visual separator
+│   ├── sheet.tsx          # Sheet/sidebar component
+│   ├── sidebar.tsx        # Sidebar component
+│   ├── skeleton.tsx       # Loading skeleton
+│   ├── tooltip.tsx        # Tooltip component
+│   └── index.ts           # Component exports
 ├── app-sidebar.tsx        # Layout-specific components
 ├── route-guards.tsx       # Auth protection wrappers
 └── theme-toggle.tsx       # Global utilities
@@ -201,11 +220,10 @@ export default [
   route("signin", "routes/_auth/signin.tsx"),
   route("signup", "routes/_auth/signup.tsx"),
   route("signout", "routes/_auth/signout.tsx"),
-  route("dashboard", "routes/_dashboard/_layout.tsx", [
-    index("routes/_dashboard/_index.tsx"),
-    route("account", "routes/_dashboard/account.tsx"),
+  layout("routes/_dashboard/_layout.tsx", [
+    route("dashboard", "routes/_dashboard/_index.tsx"),
     route("settings", "routes/_dashboard/settings.tsx"),
-    route("*", "routes/_dashboard/$.tsx"),
+    route("account", "routes/_dashboard/account.tsx"),
   ]),
   route("*", "routes/$.tsx"),
 ] satisfies RouteConfig;
@@ -265,8 +283,10 @@ The app will be available at `http://localhost:5173`
 
 ```
 Email: admin@example.com
-Password: password123
+Password: pass123
 ```
+
+**Note**: The mock authentication accepts any valid email address with the password `pass123`.
 
 ## Available Scripts
 
@@ -307,11 +327,11 @@ VITE_API_URL=https://api.example.com
 
 ### Mock Authentication
 
-The app includes mock authentication for development. To connect to a real backend:
+The app includes mock authentication for development. The mock auth accepts any valid email with the password `pass123`. To connect to a real backend:
 
-1. Set `USE_MOCK_AUTH = false` in `app/features/auth/api/auth.ts`
+1. Set `USE_MOCK_AUTH = false` in `app/lib/constants/index.ts`
 2. Configure `VITE_API_URL` in your `.env` file
-3. Implement your API endpoints to match the expected interfaces
+3. Implement your API endpoints to match the expected interfaces in `app/features/auth/api/auth.ts`
 
 ## Deployment
 
@@ -360,7 +380,8 @@ export default function UsersPage() {
 2. Register in `app/routes.ts`:
 
 ```typescript
-route("dashboard", "routes/_dashboard/_layout.tsx", [
+layout("routes/_dashboard/_layout.tsx", [
+  route("dashboard", "routes/_dashboard/_index.tsx"),
   // ... existing routes
   route("users", "routes/_dashboard/users.tsx"),
 ]),
@@ -433,6 +454,26 @@ This boilerplate is configured as a Single Page Application (`ssr: false`) for:
 - **Team autonomy**: Teams can own and develop features independently
 - **Clear boundaries**: Reduces coupling between features
 - **Easier onboarding**: New developers can focus on one feature at a time
+
+## Testing
+
+The project includes testing infrastructure with the following tools:
+
+- **Vitest** - Unit and integration testing
+- **Playwright** - End-to-end testing
+- **Testing Library** - React component testing utilities
+
+### Running Tests
+
+```bash
+# Run unit tests (when implemented)
+pnpm test
+
+# Run E2E tests (when implemented)
+pnpm test:e2e
+```
+
+**Note**: Test files and configurations are set up but tests are not yet implemented. Follow the feature-based structure when adding tests (e.g., `features/auth/__tests__/`).
 
 ## Code Quality
 
