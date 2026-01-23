@@ -32,10 +32,6 @@ function getHydrationSnapshot() {
   return isHydrated;
 }
 
-function getServerSnapshot() {
-  return false;
-}
-
 /**
  * Hook to access auth state and actions.
  * Uses Zustand store internally for state management.
@@ -44,7 +40,7 @@ export function useAuthContext(): AuthContextValue {
   const hydrated = useSyncExternalStore(
     subscribeToHydration,
     getHydrationSnapshot,
-    getServerSnapshot
+    () => false
   );
 
   const user = useAuthStore((state) => state.user);

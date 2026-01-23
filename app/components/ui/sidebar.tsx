@@ -5,7 +5,8 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { PanelLeftIcon } from "lucide-react";
 
 import { useIsMobile } from "~/hooks/use-mobile";
-import { cn } from "~/lib/utils";
+import { SIDEBAR } from "~/lib/constants";
+import { cn } from "~/lib/utils/cn";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Separator } from "~/components/ui/separator";
@@ -23,13 +24,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-
-const SIDEBAR_COOKIE_NAME = "sidebar_state";
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_WIDTH = "16rem";
-const SIDEBAR_WIDTH_MOBILE = "18rem";
-const SIDEBAR_WIDTH_ICON = "3rem";
-const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 type SidebarContextProps = {
   state: "expanded" | "collapsed";
@@ -102,7 +96,7 @@ function SidebarProvider({
     if (typeof document === "undefined") return defaultOpen;
     const cookies = document.cookie.split("; ");
     const sidebarCookie = cookies.find((cookie) =>
-      cookie.startsWith(`${SIDEBAR_COOKIE_NAME}=`)
+      cookie.startsWith(`${SIDEBAR.COOKIE_NAME}=`)
     );
     if (sidebarCookie) {
       const value = sidebarCookie.split("=")[1];
@@ -125,7 +119,7 @@ function SidebarProvider({
       }
 
       // This sets the cookie to keep the sidebar state.
-      document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+      document.cookie = `${SIDEBAR.COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR.COOKIE_MAX_AGE}`;
     },
     [setOpenProp, open]
   );
@@ -145,7 +139,7 @@ function SidebarProvider({
     if (typeof document !== "undefined" && !openProp && !isMobile) {
       const cookies = document.cookie.split("; ");
       const sidebarCookie = cookies.find((cookie) =>
-        cookie.startsWith(`${SIDEBAR_COOKIE_NAME}=`)
+        cookie.startsWith(`${SIDEBAR.COOKIE_NAME}=`)
       );
       if (sidebarCookie) {
         const value = sidebarCookie.split("=")[1];
@@ -161,7 +155,7 @@ function SidebarProvider({
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
-        event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
+        event.key === SIDEBAR.KEYBOARD_SHORTCUT &&
         (event.metaKey || event.ctrlKey)
       ) {
         event.preventDefault();
@@ -211,8 +205,8 @@ function SidebarProvider({
           data-collapsible={state === "collapsed" ? collapsible : ""}
           style={
             {
-              "--sidebar-width": SIDEBAR_WIDTH,
-              "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
+              "--sidebar-width": SIDEBAR.WIDTH,
+              "--sidebar-width-icon": SIDEBAR.WIDTH_ICON,
               ...style,
             } as React.CSSProperties
           }
@@ -288,7 +282,7 @@ function Sidebar({
           className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
           style={
             {
-              "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+              "--sidebar-width": SIDEBAR.WIDTH_MOBILE,
             } as React.CSSProperties
           }
           side={side}

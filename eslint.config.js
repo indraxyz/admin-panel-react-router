@@ -5,8 +5,10 @@ import reactHooks from "eslint-plugin-react-hooks";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import prettier from "eslint-plugin-prettier/recommended";
 import globals from "globals";
+// import {defineConfig} from "eslint-config-prettier";
+import {defineConfig} from "eslint/config";
 
-export default tseslint.config(
+export default defineConfig(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

@@ -15,6 +15,7 @@ import {
   Monitor,
 } from "lucide-react";
 import type { Route } from "./+types/settings";
+import { APP_BRANDING } from "~/lib/constants";
 import { useTheme } from "~/hooks/use-theme";
 import { Button } from "~/components/ui/button";
 import { FormField } from "~/components/ui/form-field";
@@ -57,7 +58,7 @@ export default function SettingsPage() {
   } = useForm<GeneralSettingsFormData>({
     resolver: zodResolver(generalSettingsSchema),
     defaultValues: {
-      siteName: "Admin Panel",
+      siteName: APP_BRANDING.NAME,
       siteDescription: "Management System",
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       language: "en",

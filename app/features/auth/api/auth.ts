@@ -1,14 +1,11 @@
 import { apiClient } from "~/lib/api/client";
+import { USE_MOCK_AUTH } from "~/lib/constants";
 import type {
   User,
   SignInCredentials,
   SignUpData,
   AuthResponse,
 } from "~/features/auth/types";
-
-// Set to true to use mock authentication (no backend required)
-// Set to false when you have a real API backend
-const USE_MOCK_AUTH = true;
 
 export async function signIn(
   credentials: SignInCredentials
@@ -20,11 +17,11 @@ export async function signIn(
     const email = credentials.email?.trim().toLowerCase();
     const password = credentials.password;
 
-    // Mock validation - accepts any valid email with password "password123"
+    // Mock validation - accepts any valid email with password "pass123"
     // Or the default admin account
     const isValidAdmin =
-      email === "admin@example.com" && password === "password123";
-    const isAnyUserWithPassword = password === "password123" && email;
+      email === "admin@example.com" && password === "pass123";
+    const isAnyUserWithPassword = password === "pass123" && email;
 
     if (isValidAdmin || isAnyUserWithPassword) {
       return {
@@ -39,7 +36,7 @@ export async function signIn(
         token: "mock-jwt-token-" + Date.now(),
       };
     }
-    throw new Error("Invalid email or password. Use password: password123");
+    throw new Error("Invalid email or password. Use password: pass123");
   }
 
   return apiClient.post<AuthResponse>("/auth/signin", credentials);

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Input } from "./input";
 import { Label } from "./label";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/utils/cn";
 
 export interface FormFieldProps extends React.ComponentPropsWithoutRef<"input"> {
   label?: string;

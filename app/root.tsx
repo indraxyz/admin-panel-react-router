@@ -11,6 +11,7 @@ import type { Route } from "./+types/root";
 import { useAuthContext } from "./contexts/auth.context";
 import { ThemeProvider } from "./hooks/use-theme";
 import "./app.css";
+import {useEffect} from "react";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -78,9 +79,6 @@ export function HydrateFallback() {
     <div className="bg-background fixed inset-0 z-50 flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
         <div className="border-primary h-10 w-10 animate-spin rounded-full border-4 border-t-transparent" />
-        <p className="text-muted-foreground animate-pulse text-sm">
-          Loading...
-        </p>
       </div>
     </div>
   );
@@ -104,14 +102,15 @@ export default function App() {
 function HideInitialLoader() {
   const { isLoading } = useAuthContext();
 
-  // Only hide the initial loader after auth store is hydrated
-  if (
-    !isLoading &&
-    typeof window !== "undefined" &&
-    window.__hideInitialLoader
-  ) {
-    window.__hideInitialLoader();
-  }
+  useEffect(() => {
+    if (!isLoading && window.__hideInitialLoader) {
+      // Small delay to ensure route content has rendered
+      const timer = requestAnimationFrame(() => {
+        window.__hideInitialLoader?.();
+      });
+      return () => cancelAnimationFrame(timer);
+    }
+  }, [isLoading]);
 
   return null;
 }

@@ -274,7 +274,7 @@ Password: password123
 |---------|-------------|
 | `pnpm dev` | Start development server |
 | `pnpm build` | Build for production |
-| `pnpm start` | Start production server |
+| `pnpm start` | Start production server (serves build/client) |
 | `pnpm typecheck` | Run TypeScript type checking |
 | `pnpm lint` | Run ESLint |
 | `pnpm lint:fix` | Fix ESLint errors |
@@ -325,16 +325,6 @@ pnpm build
 
 # Output directory
 build/client
-```
-
-### Docker
-
-```bash
-# Build the image
-docker build -t dashboard-admin .
-
-# Run the container
-docker run -p 3000:3000 dashboard-admin
 ```
 
 ### Static Hosting (Vercel, Netlify, etc.)

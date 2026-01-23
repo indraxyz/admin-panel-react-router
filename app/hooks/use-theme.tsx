@@ -1,4 +1,5 @@
 import * as React from "react";
+import { THEME_STORAGE_KEY } from "~/lib/constants";
 
 type Theme = "light" | "dark" | "system";
 
@@ -11,8 +12,6 @@ interface ThemeContextValue {
 const ThemeContext = React.createContext<ThemeContextValue | undefined>(
   undefined
 );
-
-const THEME_STORAGE_KEY = "app-theme";
 
 function getSystemTheme(): "light" | "dark" {
   if (typeof window === "undefined") return "light";

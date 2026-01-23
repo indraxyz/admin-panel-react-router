@@ -72,17 +72,15 @@ const features = [
 export default function Home() {
   return (
     <RequireGuest>
-      <div className="from-background to-muted/20 min-h-screen bg-gradient-to-b">
+      <div className="from-background to-muted/20 min-h-screen bg-linear-to-b">
         {/* Header with Theme Toggle */}
-        <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
+        <header className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
           <div className="container flex h-14 items-center justify-between px-4 sm:h-16 sm:px-6 lg:px-8">
             <div className="flex items-center gap-2">
               <div className="bg-primary text-primary-foreground flex h-7 w-7 items-center justify-center rounded-lg sm:h-8 sm:w-8">
                 <Shield className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </div>
-              <span className="text-sm font-semibold sm:text-base">
-                Admin
-              </span>
+              <span className="text-sm font-semibold sm:text-base">Admin</span>
             </div>
             <div className="flex items-center gap-2 sm:gap-4">
               <ThemeToggle />
@@ -109,20 +107,17 @@ export default function Home() {
           <div className="mx-auto max-w-3xl text-center">
             <div className="bg-muted/50 mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm sm:mb-8 sm:px-4 sm:py-2">
               <Shield className="text-primary h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span className="text-muted-foreground">
-                team access only
-              </span>
+              <span className="text-muted-foreground">team access only</span>
             </div>
 
             <h1 className="mb-4 text-3xl font-bold tracking-tight sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl">
-              <span className="from-foreground to-foreground/70 bg-gradient-to-r bg-clip-text text-transparent">
+              <span className="from-foreground to-foreground/70 bg-linear-to-r bg-clip-text text-transparent">
                 Admin
               </span>
             </h1>
 
             <p className="text-muted-foreground mx-auto mb-8 max-w-2xl text-base sm:mb-10 sm:text-lg md:text-xl">
-              Manage events, registrations, and operations from one centralized
-              dashboard
+              Manage data from one centralized dashboard with ease
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
@@ -146,43 +141,41 @@ export default function Home() {
 
         {/* Features Section */}
         <section className="bg-muted/30 border-t">
-          <div className="container mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
-            <div className="mx-auto max-w-6xl">
-              <div className="mb-8 text-center sm:mb-12">
-                <h2 className="mb-3 text-2xl font-bold tracking-tight sm:mb-4 sm:text-3xl md:text-4xl">
-                  Everything you need
-                </h2>
-                <p className="text-muted-foreground mx-auto max-w-xl text-sm sm:text-base md:text-lg">
-                  All the tools and features the team needs to manage
-                  events effectively
-                </p>
-              </div>
+          <div className="w-full py-12 sm:py-16 lg:py-20">
+            <div className="mb-8 text-center sm:mb-12">
+              <h2 className="mb-3 text-2xl font-bold tracking-tight sm:mb-4 sm:text-3xl md:text-4xl">
+                Everything you need
+              </h2>
+              <p className="text-muted-foreground mx-auto max-w-xl text-sm sm:text-base md:text-lg">
+                All the tools and features the team needs to manage data
+                effectively
+              </p>
+            </div>
 
-              <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-                {features.map((feature) => {
-                  const Icon = feature.icon;
-                  return (
-                    <Card
-                      key={feature.title}
-                      className="group hover:border-primary/50 transition-all duration-200 hover:shadow-md"
-                    >
-                      <CardHeader className="pb-2 sm:pb-4">
-                        <div className="bg-primary/10 text-primary group-hover:bg-primary/20 mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors sm:mb-4 sm:h-12 sm:w-12">
-                          <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
-                        </div>
-                        <CardTitle className="text-lg sm:text-xl">
-                          {feature.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-0">
-                        <CardDescription className="text-sm leading-relaxed sm:text-base">
-                          {feature.description}
-                        </CardDescription>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </div>
+            <div className="flex gap-4 overflow-x-auto px-4 py-2 sm:px-6 lg:px-8">
+              {features.map((feature) => {
+                const Icon = feature.icon;
+                return (
+                  <Card
+                    key={feature.title}
+                    className="group hover:border-primary/50 w-[350px] shrink-0 transition-all duration-200 hover:shadow-md"
+                  >
+                    <CardHeader className="pb-2 sm:pb-4">
+                      <div className="bg-primary/10 text-primary group-hover:bg-primary/20 mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors sm:mb-4 sm:h-12 sm:w-12">
+                        <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                      </div>
+                      <CardTitle className="text-lg sm:text-xl">
+                        {feature.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <CardDescription className="text-sm leading-relaxed sm:text-base">
+                        {feature.description}
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </div>
         </section>

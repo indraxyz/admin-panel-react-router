@@ -1,5 +1,10 @@
-import { z } from "zod";
-import type { FieldErrors, FieldValues, Resolver } from "react-hook-form";
+import type { z } from "zod";
+import type {
+  FieldErrors,
+  FieldValues,
+  Resolver,
+  ResolverResult,
+} from "react-hook-form";
 
 /**
  * Custom Zod resolver for react-hook-form that uses safeParse
@@ -9,9 +14,9 @@ import type { FieldErrors, FieldValues, Resolver } from "react-hook-form";
  * @hookform/resolvers and certain Zod versions.
  */
 export function zodResolver<T extends FieldValues>(
-  schema: z.ZodSchema<T>
+  schema: z.Schema<T>
 ): Resolver<T> {
-  return async (data: T) => {
+  return async (data: T): Promise<ResolverResult<T, T>> => {
     const result = schema.safeParse(data);
 
     if (result.success) {
@@ -30,6 +35,6 @@ export function zodResolver<T extends FieldValues>(
       }
     }
 
-    return { values: {} as T, errors };
+    return { values: {}, errors };
   };
 }

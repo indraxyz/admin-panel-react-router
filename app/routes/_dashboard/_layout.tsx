@@ -33,11 +33,19 @@ export default function DashboardLayout() {
 
     const items = [{ label: "Dashboard", href: "/dashboard" }];
 
-    if (segments[1] === "account") {
-      items.push({ label: "Account", href: "/dashboard/account" });
-    } else if (segments[1] === "settings") {
-      items.push({ label: "Settings", href: "/dashboard/settings" });
-    } else if (segments.length > 1) {
+    if (segments[0] === "account") {
+      items.push({ label: "Account", href: "/account" });
+    } else if (segments[0] === "settings") {
+      items.push({ label: "Settings", href: "/settings" });
+      if (segments.length > 1) {
+        const lastSegment = segments[segments.length - 1];
+        const label = lastSegment
+          .split("-")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
+        items.push({ label, href: path });
+      }
+    } else if (segments.length > 0 && segments[0] !== "dashboard") {
       const lastSegment = segments[segments.length - 1];
       const label = lastSegment
         .split("-")
